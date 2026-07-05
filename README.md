@@ -136,7 +136,7 @@ npm run seed
 
 **Default Seed Credentials:**
 - **Email**: `superadmin@erp.com`
-- **Password**: `Admin123!`
+- **Password**: `Password123!`
 
 ---
 
