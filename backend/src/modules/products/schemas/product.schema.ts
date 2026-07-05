@@ -51,6 +51,15 @@ ProductSchema.virtual('isLowStock').get(function () {
   return this.stockQuantity < 5;
 });
 
+ProductSchema.virtual('unitPrice').get(function () {
+  return this.sellingPrice;
+});
+
+ProductSchema.virtual('imageUrl').get(function () {
+  if (!this.image) return '';
+  return this.image.startsWith('/') ? this.image : `/${this.image}`;
+});
+
 // Indexes
 ProductSchema.index({ sku: 1 });
 ProductSchema.index({ category: 1, isActive: 1, deletedAt: 1 });
