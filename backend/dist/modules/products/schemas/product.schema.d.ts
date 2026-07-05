@@ -10,7 +10,7 @@ export declare class Product extends Document {
     image: string;
     description: string;
     isActive: boolean;
-    id: string;
+    // id: string;
 }
 export declare const ProductSchema: MongooseSchema<Product, import("mongoose").Model<Product, any, any, any, any, any, Product>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Product, Document<unknown, {}, Product, {}, import("mongoose").DefaultSchemaOptions> & Product & Required<{
     _id: import("mongoose").Types.ObjectId;
