@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  database:
+    image: mongo:6.0
+    container_name: erp-mongodb
+    restart: always
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: erp-redis
+    restart: always
+    ports:
+      - "6380:6379"
+
+  backend:
+    build: ./backend
+    container_name: erp-backend
+    restart: always
+    depends_on:
+      - database
+      - redis
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - API_PREFIX=api/v1
+      - MONGODB_URI=mongodb://database:27017/mini-erp
+      - MONGO_USER=root
+      - MONGO_PASSWORD=password
+      - MONGO_DB=mini-erp
+      - JWT_ACCESS_SECRET=super-secret-access-token-key-must-be-long-32-chars
+      - JWT_REFRESH_SECRET=super-secret-refresh-token-key-must-be-long-32-chars
+      - JWT_ACCESS_EXPIRATION=15m
+      - JWT_REFRESH_EXPIRATION=7d
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=
+      - CORS_ORIGINS=http://localhost:8001
+      - UPLOAD_DEST=./uploads/products
+      - UPLOAD_MAX_SIZE=5242880
+      - THROTTLE_TTL=60000
+      - THROTTLE_LIMIT=100
+    volumes:
+      - uploads-data:/app/uploads
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: erp-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "8001:80"
+
+volumes:
+  mongo-data:
+  uploads-data:

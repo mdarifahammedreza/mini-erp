@@ -264,6 +264,15 @@ Verify that all services are healthy:
 docker compose ps
 ```
 
+### 4. Active Host Deployment Status
+The application is currently deployed on this system using the following configurations:
+- **App URL**: http://localhost:8001
+- **API Swagger Docs**: http://localhost:8001/api/v1/docs
+- **Frontend Port**: `8001` (mapped to container port `80`)
+- **Backend Port**: `5000` (mapped to container port `5000`, and proxied under the `/api` path by the frontend Nginx router)
+- **Database (MongoDB)**: `mongodb://localhost:27018/mini-erp` (mapped to container port `27017` to prevent conflict with any existing MongoDB on `27017`)
+- **Redis**: `redis://localhost:6380` (mapped to container port `6379` to prevent conflict with any existing Redis on `6379`)
+
 ---
 
 ## Manual Production Deployment (Nginx & PM2)

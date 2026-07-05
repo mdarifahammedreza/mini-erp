@@ -17,6 +17,15 @@ async function bootstrap() {
       contentSecurityPolicy: false,
     }),
   );
+  app.use((req: any, res: any, next: any) => {
+    Object.defineProperty(req, 'query', {
+      value: { ...req.query },
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    });
+    next();
+  });
   app.use(mongoSanitize());
 
   app.setGlobalPrefix('api/v1');
