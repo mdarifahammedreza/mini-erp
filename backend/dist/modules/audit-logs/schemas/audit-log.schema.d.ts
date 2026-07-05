@@ -29,6 +29,15 @@ export declare const AuditLogSchema: MongooseSchema<AuditLog, import("mongoose")
     }, "id"> & {
         id: string;
     }> | undefined;
+    description?: import("mongoose").SchemaDefinitionProperty<string, AuditLog, Document<unknown, {}, AuditLog, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<AuditLog & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
     module?: import("mongoose").SchemaDefinitionProperty<string, AuditLog, Document<unknown, {}, AuditLog, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<AuditLog & Required<{
@@ -39,15 +48,6 @@ export declare const AuditLogSchema: MongooseSchema<AuditLog, import("mongoose")
         id: string;
     }> | undefined;
     action?: import("mongoose").SchemaDefinitionProperty<string, AuditLog, Document<unknown, {}, AuditLog, {
-        id: string;
-    }, import("mongoose").DefaultSchemaOptions> & Omit<AuditLog & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }> & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-    description?: import("mongoose").SchemaDefinitionProperty<string, AuditLog, Document<unknown, {}, AuditLog, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<AuditLog & Required<{
         _id: import("mongoose").Types.ObjectId;

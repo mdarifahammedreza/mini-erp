@@ -35,24 +35,6 @@ export declare const RoleSchema: MongooseSchema<Role, import("mongoose").Model<R
     }, "id"> & {
         id: string;
     }> | undefined;
-    permissions?: import("mongoose").SchemaDefinitionProperty<Permission[], Role, Document<unknown, {}, Role, {
-        id: string;
-    }, import("mongoose").DefaultSchemaOptions> & Omit<Role & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }> & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-    slug?: import("mongoose").SchemaDefinitionProperty<string, Role, Document<unknown, {}, Role, {
-        id: string;
-    }, import("mongoose").DefaultSchemaOptions> & Omit<Role & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }> & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
     description?: import("mongoose").SchemaDefinitionProperty<string, Role, Document<unknown, {}, Role, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<Role & Required<{
@@ -63,6 +45,24 @@ export declare const RoleSchema: MongooseSchema<Role, import("mongoose").Model<R
         id: string;
     }> | undefined;
     isActive?: import("mongoose").SchemaDefinitionProperty<boolean, Role, Document<unknown, {}, Role, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<Role & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    permissions?: import("mongoose").SchemaDefinitionProperty<Permission[], Role, Document<unknown, {}, Role, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<Role & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    slug?: import("mongoose").SchemaDefinitionProperty<string, Role, Document<unknown, {}, Role, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<Role & Required<{
         _id: import("mongoose").Types.ObjectId;

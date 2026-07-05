@@ -17,8 +17,7 @@ const paginatePlugin = (schema) => {
                 .skip(skip)
                 .limit(limit)
                 .populate(options.populate || '')
-                .select(options.select || '')
-                .lean(),
+                .select(options.select || ''),
             this.countDocuments(filter),
         ]);
         const totalPages = Math.ceil(totalDocs / limit);

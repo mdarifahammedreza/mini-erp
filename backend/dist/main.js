@@ -42,11 +42,21 @@ const path_1 = require("path");
 const app_module_1 = require("./app.module");
 const http_exception_filter_1 = require("./common/filters/http-exception.filter");
 const jwt_auth_guard_1 = require("./modules/auth/guards/jwt-auth.guard");
+const transform_interceptor_1 = require("./common/interceptors/transform.interceptor");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use(helmet.default({
         contentSecurityPolicy: false,
     }));
+    app.use((req, res, next) => {
+        Object.defineProperty(req, 'query', {
+            value: { ...req.query },
+            writable: true,
+            configurable: true,
+            enumerable: true,
+        });
+        next();
+    });
     app.use(mongoSanitize());
     app.setGlobalPrefix('api/v1');
     app.enableCors({
@@ -63,6 +73,7 @@ async function bootstrap() {
         },
     }));
     app.useGlobalFilters(new http_exception_filter_1.HttpExceptionFilter());
+    app.useGlobalInterceptors(new transform_interceptor_1.TransformInterceptor());
     const reflector = app.get(core_1.Reflector);
     app.useGlobalGuards(new jwt_auth_guard_1.JwtAuthGuard(reflector));
     app.useStaticAssets((0, path_1.join)(__dirname, '..', 'public'), {

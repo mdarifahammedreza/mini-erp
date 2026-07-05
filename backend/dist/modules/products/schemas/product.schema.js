@@ -24,6 +24,7 @@ let Product = class Product extends mongoose_2.Document {
     image;
     description;
     isActive;
+    id;
 };
 exports.Product = Product;
 __decorate([
@@ -62,10 +63,17 @@ __decorate([
     (0, mongoose_1.Prop)({ default: true }),
     __metadata("design:type", Boolean)
 ], Product.prototype, "isActive", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ virtual: true }),
+    __metadata("design:type", String)
+], Product.prototype, "id", void 0);
 exports.Product = Product = __decorate([
     (0, mongoose_1.Schema)({ collection: 'products' })
 ], Product);
 exports.ProductSchema = mongoose_1.SchemaFactory.createForClass(Product);
+exports.ProductSchema.virtual('id').get(function () {
+    return this._id?.toString();
+});
 exports.ProductSchema.plugin(plugins_1.timestampPlugin);
 exports.ProductSchema.plugin(plugins_1.softDeletePlugin);
 exports.ProductSchema.plugin(plugins_1.paginatePlugin);
@@ -77,6 +85,14 @@ exports.ProductSchema.virtual('profitMargin').get(function () {
 });
 exports.ProductSchema.virtual('isLowStock').get(function () {
     return this.stockQuantity < 5;
+});
+exports.ProductSchema.virtual('unitPrice').get(function () {
+    return this.sellingPrice;
+});
+exports.ProductSchema.virtual('imageUrl').get(function () {
+    if (!this.image)
+        return '';
+    return this.image.startsWith('/') ? this.image : `/${this.image}`;
 });
 exports.ProductSchema.index({ sku: 1 });
 exports.ProductSchema.index({ category: 1, isActive: 1, deletedAt: 1 });

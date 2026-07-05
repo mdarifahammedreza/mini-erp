@@ -15,9 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
+const path_1 = require("path");
 const products_service_1 = require("./products.service");
-const create_product_dto_1 = require("./dto/create-product.dto");
-const update_product_dto_1 = require("./dto/update-product.dto");
 const permissions_decorator_1 = require("../../common/decorators/permissions.decorator");
 const permissions_guard_1 = require("../../common/guards/permissions.guard");
 let ProductsController = class ProductsController {
@@ -25,8 +26,9 @@ let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
     }
-    create(createDto) {
-        return this.productsService.create(createDto);
+    create(createDto, file) {
+        const dto = this.mapAndValidateProductDto(createDto, file);
+        return this.productsService.create(dto);
     }
     findAll(page, limit, search, category, isActive, lowStock) {
         return this.productsService.findAll({ page, limit, search, category, isActive, lowStock });
@@ -34,20 +36,57 @@ let ProductsController = class ProductsController {
     findOne(id) {
         return this.productsService.findOne(id);
     }
-    update(id, updateDto) {
-        return this.productsService.update(id, updateDto);
+    update(id, updateDto, file) {
+        const dto = this.mapAndValidateProductDto(updateDto, file);
+        return this.productsService.update(id, dto);
     }
     remove(id) {
         return this.productsService.remove(id);
+    }
+    mapAndValidateProductDto(body, file) {
+        const dto = { ...body };
+        if (file) {
+            dto.image = `uploads/${file.filename}`;
+        }
+        else if (!dto.image) {
+            dto.image = 'uploads/placeholder.png';
+        }
+        if (body.unitPrice !== undefined) {
+            dto.sellingPrice = Number(body.unitPrice);
+        }
+        if (body.stockQuantity !== undefined) {
+            dto.stockQuantity = Number(body.stockQuantity);
+        }
+        if (body.purchasePrice !== undefined) {
+            dto.purchasePrice = Number(body.purchasePrice);
+        }
+        else {
+            dto.purchasePrice = dto.purchasePrice || 0;
+        }
+        if (body.isActive !== undefined) {
+            dto.isActive = body.isActive === 'true' || body.isActive === true;
+        }
+        return dto;
     }
 };
 exports.ProductsController = ProductsController;
 __decorate([
     (0, common_1.Post)(),
     (0, permissions_decorator_1.Permissions)('products.create'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image', {
+        storage: (0, multer_1.diskStorage)({
+            destination: './public/uploads',
+            filename: (req, file, callback) => {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+                const ext = (0, path_1.extname)(file.originalname);
+                callback(null, `product-${uniqueSuffix}${ext}`);
+            },
+        }),
+    })),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "create", null);
 __decorate([
@@ -74,10 +113,21 @@ __decorate([
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, permissions_decorator_1.Permissions)('products.update'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image', {
+        storage: (0, multer_1.diskStorage)({
+            destination: './public/uploads',
+            filename: (req, file, callback) => {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+                const ext = (0, path_1.extname)(file.originalname);
+                callback(null, `product-${uniqueSuffix}${ext}`);
+            },
+        }),
+    })),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_product_dto_1.UpdateProductDto]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 __decorate([

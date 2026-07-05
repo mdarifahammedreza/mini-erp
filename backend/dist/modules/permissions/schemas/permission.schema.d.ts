@@ -34,6 +34,24 @@ export declare const PermissionSchema: import("mongoose").Schema<Permission, imp
     }, "id"> & {
         id: string;
     }> | undefined;
+    description?: import("mongoose").SchemaDefinitionProperty<string, Permission, Document<unknown, {}, Permission, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<Permission & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    isActive?: import("mongoose").SchemaDefinitionProperty<boolean, Permission, Document<unknown, {}, Permission, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<Permission & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
     slug?: import("mongoose").SchemaDefinitionProperty<string, Permission, Document<unknown, {}, Permission, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<Permission & Required<{
@@ -53,24 +71,6 @@ export declare const PermissionSchema: import("mongoose").Schema<Permission, imp
         id: string;
     }> | undefined;
     action?: import("mongoose").SchemaDefinitionProperty<string, Permission, Document<unknown, {}, Permission, {
-        id: string;
-    }, import("mongoose").DefaultSchemaOptions> & Omit<Permission & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }> & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-    description?: import("mongoose").SchemaDefinitionProperty<string, Permission, Document<unknown, {}, Permission, {
-        id: string;
-    }, import("mongoose").DefaultSchemaOptions> & Omit<Permission & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }> & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-    isActive?: import("mongoose").SchemaDefinitionProperty<boolean, Permission, Document<unknown, {}, Permission, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<Permission & Required<{
         _id: import("mongoose").Types.ObjectId;

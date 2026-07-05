@@ -16,6 +16,7 @@ class CreateCustomerDto {
     email;
     phone;
     address;
+    isActive;
 }
 exports.CreateCustomerDto = CreateCustomerDto;
 __decorate([
@@ -42,4 +43,9 @@ __decorate([
     (0, class_validator_1.MaxLength)(500),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "address", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], CreateCustomerDto.prototype, "isActive", void 0);
 //# sourceMappingURL=create-customer.dto.js.map

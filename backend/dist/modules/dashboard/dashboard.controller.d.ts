@@ -14,8 +14,6 @@ export declare class DashboardController {
         _id: import("mongoose").Types.ObjectId;
     }> & {
         __v: number;
-    } & {
-        id: string;
     })[]>;
     getTopSelling(limit?: number): Promise<any[]>;
     getChartData(range?: '7days' | '30days'): Promise<any[]>;

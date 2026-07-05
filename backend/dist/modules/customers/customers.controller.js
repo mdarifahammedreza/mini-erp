@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomersController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
+const permissions_decorator_1 = require("../../common/decorators/permissions.decorator");
+const permissions_guard_1 = require("../../common/guards/permissions.guard");
 const customers_service_1 = require("./customers.service");
 const create_customer_dto_1 = require("./dto/create-customer.dto");
 const update_customer_dto_1 = require("./dto/update-customer.dto");
-const permissions_decorator_1 = require("../../common/decorators/permissions.decorator");
-const permissions_guard_1 = require("../../common/guards/permissions.guard");
 let CustomersController = class CustomersController {
     customersService;
     constructor(customersService) {

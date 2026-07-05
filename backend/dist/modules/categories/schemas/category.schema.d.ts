@@ -32,15 +32,6 @@ export declare const CategorySchema: import("mongoose").Schema<Category, import(
     }, "id"> & {
         id: string;
     }> | undefined;
-    slug?: import("mongoose").SchemaDefinitionProperty<string, Category, Document<unknown, {}, Category, {
-        id: string;
-    }, import("mongoose").DefaultSchemaOptions> & Omit<Category & Required<{
-        _id: import("mongoose").Types.ObjectId;
-    }> & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
     description?: import("mongoose").SchemaDefinitionProperty<string, Category, Document<unknown, {}, Category, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<Category & Required<{
@@ -51,6 +42,15 @@ export declare const CategorySchema: import("mongoose").Schema<Category, import(
         id: string;
     }> | undefined;
     isActive?: import("mongoose").SchemaDefinitionProperty<boolean, Category, Document<unknown, {}, Category, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<Category & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }> & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    slug?: import("mongoose").SchemaDefinitionProperty<string, Category, Document<unknown, {}, Category, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<Category & Required<{
         _id: import("mongoose").Types.ObjectId;

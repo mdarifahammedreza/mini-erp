@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { timestampPlugin, softDeletePlugin, toJSONPlugin, paginatePlugin } from '../../../database/plugins';
+import { paginatePlugin, softDeletePlugin, timestampPlugin, toJSONPlugin } from '../../../database/plugins';
 import { Category } from '../../categories/schemas/category.schema';
 
 @Schema({ collection: 'products' })
@@ -31,9 +31,16 @@ export class Product extends Document {
 
   @Prop({ default: true })
   isActive: boolean;
+
+  @Prop({ virtual: true })
+  id: string;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
+
+ProductSchema.virtual('id').get(function () {
+  return this._id?.toString();
+});
 
 // Apply custom plugins
 ProductSchema.plugin(timestampPlugin);
