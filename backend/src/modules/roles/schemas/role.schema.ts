@@ -26,14 +26,12 @@ export class Role extends Document {
 
 export const RoleSchema = SchemaFactory.createForClass(Role);
 
-// Apply custom plugins
 RoleSchema.plugin(timestampPlugin);
 RoleSchema.plugin(softDeletePlugin);
 RoleSchema.plugin(paginatePlugin);
 RoleSchema.plugin(toJSONPlugin);
 
-// Pre-save hook to generate slug
-RoleSchema.pre('validate', function (next: any) {
+RoleSchema.pre('validate', function (this: any) {
   if (this.name && !this.slug) {
     this.slug = this.name
       .toLowerCase()
@@ -41,8 +39,6 @@ RoleSchema.pre('validate', function (next: any) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)+/g, '');
   }
-  next();
 });
 
-// Indexes
 RoleSchema.index({ isActive: 1, deletedAt: 1 });

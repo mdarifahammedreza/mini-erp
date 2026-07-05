@@ -19,14 +19,12 @@ export class Category extends Document {
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
 
-// Apply custom plugins
 CategorySchema.plugin(timestampPlugin);
 CategorySchema.plugin(softDeletePlugin);
 CategorySchema.plugin(paginatePlugin);
 CategorySchema.plugin(toJSONPlugin);
 
-// Pre-save hook to generate slug
-CategorySchema.pre('validate', function (next: any) {
+CategorySchema.pre('validate', function (this: any) {
   if (this.name && !this.slug) {
     this.slug = this.name
       .toLowerCase()
@@ -34,8 +32,6 @@ CategorySchema.pre('validate', function (next: any) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)+/g, '');
   }
-  next();
 });
 
-// Indexes
 CategorySchema.index({ isActive: 1, deletedAt: 1 });

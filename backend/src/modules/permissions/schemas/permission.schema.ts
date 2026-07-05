@@ -14,7 +14,7 @@ export class Permission extends Document {
     required: true,
     trim: true,
     maxlength: 50,
-    enum: ['users', 'roles', 'products', 'categories', 'customers', 'sales', 'dashboard', 'audit-logs', 'settings'],
+    enum: ['users', 'roles', 'permissions', 'products', 'categories', 'customers', 'sales', 'dashboard', 'audit-logs', 'settings'],
   })
   module: string;
 

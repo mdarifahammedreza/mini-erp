@@ -44,7 +44,7 @@ exports.CategorySchema.plugin(plugins_1.timestampPlugin);
 exports.CategorySchema.plugin(plugins_1.softDeletePlugin);
 exports.CategorySchema.plugin(plugins_1.paginatePlugin);
 exports.CategorySchema.plugin(plugins_1.toJSONPlugin);
-exports.CategorySchema.pre('validate', function (next) {
+exports.CategorySchema.pre('validate', function () {
     if (this.name && !this.slug) {
         this.slug = this.name
             .toLowerCase()
@@ -52,7 +52,6 @@ exports.CategorySchema.pre('validate', function (next) {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)+/g, '');
     }
-    next();
 });
 exports.CategorySchema.index({ isActive: 1, deletedAt: 1 });
 //# sourceMappingURL=category.schema.js.map

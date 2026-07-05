@@ -3,14 +3,13 @@ import { Schema } from 'mongoose';
 export const softDeletePlugin = (schema: Schema) => {
   schema.add({ deletedAt: { type: Date, default: null } });
 
-  schema.pre(/^find/, function (this: any, next: any) {
+  schema.pre(/^find/, function (this: any) {
     const query = this.getQuery();
     if (query && !query.includeDeleted) {
       this.where({ deletedAt: null });
     } else if (query) {
       delete query.includeDeleted;
     }
-    next();
   });
 
   schema.methods.softDelete = function () {

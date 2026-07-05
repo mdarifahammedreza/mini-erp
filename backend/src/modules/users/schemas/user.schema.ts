@@ -48,17 +48,12 @@ UserSchema.index({ email: 1 });
 UserSchema.index({ role: 1, isActive: 1, deletedAt: 1 });
 
 // Pre-save hook to hash password
-UserSchema.pre('save', async function (next: any) {
+UserSchema.pre('save', async function (this: any) {
   if (!this.isModified('password')) {
-    return next();
+    return;
   }
-  try {
-    const salt = await bcrypt.genSalt(12);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (err: any) {
-    next(err);
-  }
+  const salt = await bcrypt.genSalt(12);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Compare password method

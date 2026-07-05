@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.softDeletePlugin = void 0;
 const softDeletePlugin = (schema) => {
     schema.add({ deletedAt: { type: Date, default: null } });
-    schema.pre(/^find/, function (next) {
+    schema.pre(/^find/, function () {
         const query = this.getQuery();
         if (query && !query.includeDeleted) {
             this.where({ deletedAt: null });
@@ -11,7 +11,6 @@ const softDeletePlugin = (schema) => {
         else if (query) {
             delete query.includeDeleted;
         }
-        next();
     });
     schema.methods.softDelete = function () {
         this.deletedAt = new Date();

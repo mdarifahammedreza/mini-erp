@@ -54,7 +54,7 @@ exports.RoleSchema.plugin(plugins_1.timestampPlugin);
 exports.RoleSchema.plugin(plugins_1.softDeletePlugin);
 exports.RoleSchema.plugin(plugins_1.paginatePlugin);
 exports.RoleSchema.plugin(plugins_1.toJSONPlugin);
-exports.RoleSchema.pre('validate', function (next) {
+exports.RoleSchema.pre('validate', function () {
     if (this.name && !this.slug) {
         this.slug = this.name
             .toLowerCase()
@@ -62,7 +62,6 @@ exports.RoleSchema.pre('validate', function (next) {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)+/g, '');
     }
-    next();
 });
 exports.RoleSchema.index({ isActive: 1, deletedAt: 1 });
 //# sourceMappingURL=role.schema.js.map
