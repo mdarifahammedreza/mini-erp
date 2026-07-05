@@ -40,8 +40,7 @@ export const paginatePlugin = (schema: Schema) => {
         .skip(skip)
         .limit(limit)
         .populate(options.populate || '')
-        .select(options.select || '')
-        .lean(),
+        .select(options.select || ''),
       this.countDocuments(filter),
     ]);
 
