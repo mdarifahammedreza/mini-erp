@@ -140,7 +140,7 @@ export const CustomersPage: React.FC = () => {
       {/* ── Page header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 shadow-lg shadow-emerald-500/25">
             <Users className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -156,7 +156,7 @@ export const CustomersPage: React.FC = () => {
         {hasPermission('customers.create') && (
           <button
             onClick={() => navigate('/customers/create')}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-xl shadow-md shadow-blue-500/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl shadow-md shadow-emerald-500/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             Add Customer
@@ -249,7 +249,7 @@ export const CustomersPage: React.FC = () => {
                       {!search && hasPermission('customers.create') && (
                         <button
                           onClick={() => navigate('/customers/create')}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-md shadow-blue-500/20 mt-1"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] shadow-md shadow-emerald-500/20 mt-1"
                         >
                           <Plus className="w-4 h-4" />
                           Add Customer
@@ -267,8 +267,11 @@ export const CustomersPage: React.FC = () => {
                   return (
                     <tr
                       key={id}
-                      className="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors duration-150 animate-in fade-in slide-in-from-bottom-2"
-                      style={{ animationDelay: `${index * 50}ms`, animationDuration: '400ms' }}
+                      className="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-all duration-150"
+                      style={{
+                        animationDelay: `${index * 50}ms`,
+                        animation: 'fadeSlideIn 0.35s ease both',
+                      }}
                     >
                       {/* Name + Avatar */}
                       <td className="px-6 py-4">
@@ -421,7 +424,7 @@ export const CustomersPage: React.FC = () => {
                       onClick={() => setPage(p)}
                       className={`w-7 h-7 text-xs font-semibold rounded-lg transition-all duration-150 ${
                         isActive
-                          ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 scale-110'
+                          ? 'bg-gradient-to-br from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/20 scale-110'
                           : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                       }`}
                     >
@@ -443,6 +446,14 @@ export const CustomersPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Row animation keyframes */}
+      <style>{`
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 };

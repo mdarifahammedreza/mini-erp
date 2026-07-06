@@ -150,7 +150,7 @@ export const ProductsPage: React.FC = () => {
       {/* ── Page Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/20">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 shadow-lg shadow-violet-500/20">
             <Package className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -166,7 +166,7 @@ export const ProductsPage: React.FC = () => {
         {hasPermission('products.create') && (
           <button
             onClick={() => navigate('/products/create')}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             Add Product
@@ -218,7 +218,7 @@ export const ProductsPage: React.FC = () => {
             {hasPermission('products.create') && (
               <button
                 onClick={() => navigate('/products/create')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-md shadow-blue-500/20 hover:scale-[1.02] mt-1"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-md shadow-violet-500/20 hover:scale-[1.02] mt-1"
               >
                 <Plus className="w-4 h-4" />
                 Add Product
@@ -244,8 +244,11 @@ export const ProductsPage: React.FC = () => {
                   return (
                     <tr
                       key={product.id || product._id}
-                      className="group animate-in fade-in transition-colors duration-150 hover:bg-blue-50/40 dark:hover:bg-blue-950/20"
-                      style={{ animationDelay: `${index * 0.05}s` }}
+                      className="group hover:bg-blue-50/40 dark:hover:bg-blue-950/20 transition-all duration-150"
+                      style={{
+                        animationDelay: `${index * 50}ms`,
+                        animation: 'fadeSlideIn 0.35s ease both',
+                      }}
                     >
                       {/* Product */}
                       <td className="px-6 py-4">
@@ -413,6 +416,14 @@ export const ProductsPage: React.FC = () => {
           )}
         </div>
       )}
+
+      {/* Row animation keyframes */}
+      <style>{`
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 };

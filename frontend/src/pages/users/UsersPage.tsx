@@ -78,7 +78,7 @@ const PageButton: React.FC<{
     onClick={() => onClick(pageNum)}
     className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-150 ${
       pageNum === current
-        ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25'
+        ? 'bg-gradient-to-br from-pink-600 to-rose-600 text-white shadow-md shadow-pink-500/25'
         : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700'
     }`}
   >
@@ -143,7 +143,7 @@ export const UsersPage: React.FC = () => {
       {/* ── Page header ──────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/20">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 shadow-lg shadow-pink-500/20">
             <Shield className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -159,7 +159,7 @@ export const UsersPage: React.FC = () => {
         {hasPermission('users.create') && (
           <button
             onClick={() => navigate('/users/create')}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-md shadow-pink-500/20 hover:shadow-lg hover:shadow-pink-500/30 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
           >
             <UserPlus className="w-4 h-4" />
             <span>Create User</span>
@@ -220,7 +220,7 @@ export const UsersPage: React.FC = () => {
           {hasPermission('users.create') && !search && (
             <button
               onClick={() => navigate('/users/create')}
-              className="inline-flex items-center gap-2 mt-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-md shadow-blue-500/20 hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 mt-2 px-4 py-2.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-md shadow-pink-500/20 hover:scale-[1.02]"
             >
               <Plus className="w-4 h-4" />
               Create First User
