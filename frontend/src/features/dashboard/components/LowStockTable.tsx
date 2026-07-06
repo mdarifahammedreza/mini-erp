@@ -23,10 +23,10 @@ export const LowStockTable: React.FC<LowStockTableProps> = ({ products }) => {
           No low stock products. All inventory levels are healthy!
         </div>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-auto max-h-[400px]">
           <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50 dark:bg-slate-950/40 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            <thead className="sticky top-0 z-10 shadow-sm">
+              <tr className="bg-slate-50 dark:bg-slate-950 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 <th className="px-6 py-3">Product</th>
                 <th className="px-6 py-3">SKU</th>
                 <th className="px-6 py-3">Category</th>
@@ -46,7 +46,7 @@ export const LowStockTable: React.FC<LowStockTableProps> = ({ products }) => {
                     {product.stockQuantity}
                   </td>
                   <td className="px-6 py-4 text-right text-slate-500">
-                    {product.minStockThreshold}
+                    5
                   </td>
                 </tr>
               ))}

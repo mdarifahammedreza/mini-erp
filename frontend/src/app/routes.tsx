@@ -12,10 +12,15 @@ const ProductCreatePage = lazy(() => import('../pages/products/ProductCreatePage
 const ProductEditPage = lazy(() => import('../pages/products/ProductEditPage'));
 const CustomersPage = lazy(() => import('../pages/customers/CustomersPage'));
 const CustomerCreatePage = lazy(() => import('../pages/customers/CustomerCreatePage'));
+const CustomerEditPage = lazy(() => import('../pages/customers/CustomerEditPage'));
 const SalesPage = lazy(() => import('../pages/sales/SalesPage'));
 const SaleCreatePage = lazy(() => import('../pages/sales/SaleCreatePage'));
 const RolesPage = lazy(() => import('../pages/settings/RolesPage'));
+const UsersPage = lazy(() => import('../pages/users/UsersPage'));
+const UserCreatePage = lazy(() => import('../pages/users/UserCreatePage'));
+const UserEditPage = lazy(() => import('../pages/users/UserEditPage'));
 const UnauthorizedPage = lazy(() => import('../pages/error/UnauthorizedPage'));
+import ErrorPage from '../pages/error/ErrorPage';
 
 const PageLoader = () => (
   <div className="h-[60vh] flex flex-col items-center justify-center space-y-4">
@@ -43,6 +48,7 @@ export const router = createBrowserRouter([
   },
   {
     element: <ProtectedRoute />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <DashboardLayout />,
@@ -125,6 +131,19 @@ export const router = createBrowserRouter([
             ],
           },
           {
+            element: <RoleGuard requiredPermission="customers.update" />,
+            children: [
+              {
+                path: '/customers/edit/:id',
+                element: (
+                  <Suspense fallback={<PageLoader />}>
+                    <CustomerEditPage />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
+          {
             element: <RoleGuard requiredPermission="sales.read" />,
             children: [
               {
@@ -145,6 +164,45 @@ export const router = createBrowserRouter([
                 element: (
                   <Suspense fallback={<PageLoader />}>
                     <SaleCreatePage />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
+          {
+            element: <RoleGuard requiredPermission="users.read" />,
+            children: [
+              {
+                path: '/users',
+                element: (
+                  <Suspense fallback={<PageLoader />}>
+                    <UsersPage />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
+          {
+            element: <RoleGuard requiredPermission="users.create" />,
+            children: [
+              {
+                path: '/users/create',
+                element: (
+                  <Suspense fallback={<PageLoader />}>
+                    <UserCreatePage />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
+          {
+            element: <RoleGuard requiredPermission="users.update" />,
+            children: [
+              {
+                path: '/users/edit/:id',
+                element: (
+                  <Suspense fallback={<PageLoader />}>
+                    <UserEditPage />
                   </Suspense>
                 ),
               },

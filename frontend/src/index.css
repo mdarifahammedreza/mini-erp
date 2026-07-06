@@ -56,7 +56,144 @@
   * {
     @apply border-border;
   }
+
+  html {
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1, "cv02" 1, "cv03" 1, "cv04" 1;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings use Plus Jakarta Sans for a premium display feel */
+  h1, h2, h3 {
+    font-family: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Code/mono elements use JetBrains Mono */
+  code, kbd, pre, .font-mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+}
+
+/* ─── Global Animation Utilities ───────────────────────────── */
+@layer utilities {
+  /* Stagger fade-in for table rows */
+  @keyframes row-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-row-in {
+    animation: row-in 0.3s ease-out both;
+  }
+
+  /* Skeleton shimmer */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(148, 163, 184, 0.08) 25%,
+      rgba(148, 163, 184, 0.18) 50%,
+      rgba(148, 163, 184, 0.08) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite;
+    border-radius: 6px;
+  }
+
+  .dark .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(51, 65, 85, 0.4) 25%,
+      rgba(71, 85, 105, 0.5) 50%,
+      rgba(51, 65, 85, 0.4) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite;
+  }
+
+  /* Gradient text shorthand */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent;
+  }
+
+  /* Card glass effect */
+  .card-glass {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/80 dark:border-slate-800/80;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold transition-all duration-200;
+  }
+
+  /* Table header cell */
+  .th-cell {
+    @apply px-6 py-3.5 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest;
+  }
+
+  /* Table data cell */
+  .td-cell {
+    @apply px-6 py-4 text-sm text-slate-700 dark:text-slate-300;
+  }
+
+  /* Status dot */
+  .status-dot-active {
+    @apply inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5;
+  }
+
+  .status-dot-inactive {
+    @apply inline-block w-1.5 h-1.5 rounded-full bg-red-500 mr-1.5;
+  }
+
+  /* Page title */
+  .page-title {
+    @apply text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent;
+  }
+
+  /* Search input container */
+  .search-container {
+    @apply relative;
+  }
+
+  /* Scroll thin */
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.3);
+    border-radius: 4px;
   }
 }

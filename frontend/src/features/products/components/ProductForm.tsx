@@ -27,7 +27,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const defaultCategory = initialData?.category
     ? typeof initialData.category === 'string'
       ? initialData.category
-      : initialData.category._id
+      : initialData.category.id || (initialData.category as any)._id
     : '';
 
   const {
@@ -98,7 +98,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           >
             <option value="">Select a category</option>
             {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
+              <option key={cat.id || cat._id} value={cat.id || cat._id}>
                 {cat.name}
               </option>
             ))}
@@ -145,6 +145,18 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             className="w-full px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
           />
           {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description.message}</p>}
+        </div>
+
+        <div className="col-span-1 md:col-span-2 flex items-center space-x-3 pt-2">
+          <input
+            type="checkbox"
+            id="isActive"
+            {...register('isActive')}
+            className="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500"
+          />
+          <label htmlFor="isActive" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            Product is Active
+          </label>
         </div>
 
         <div className="col-span-1 md:col-span-2 space-y-2">

@@ -5,7 +5,7 @@ export interface SaleItem {
   product: string | Product;
   quantity: number;
   unitPrice: number;
-  subtotal: number;
+  lineTotal: number;
 }
 
 export interface Sale {
@@ -14,10 +14,7 @@ export interface Sale {
   invoiceNumber: string;
   customer: string | Customer;
   items: SaleItem[];
-  totalAmount: number;
-  paymentStatus: 'paid' | 'pending' | 'failed';
-  paymentMethod: 'cash' | 'card' | 'bank_transfer';
-  soldBy: string;
+  grandTotal: number;
   notes?: string;
   createdAt: string;
   updatedAt: string;
@@ -37,6 +34,5 @@ export interface CreateSaleInput {
     product: string;
     quantity: number;
   }[];
-  paymentMethod: 'cash' | 'card' | 'bank_transfer';
   notes?: string;
 }

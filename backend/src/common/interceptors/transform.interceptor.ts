@@ -19,7 +19,11 @@ export class TransformInterceptor<T> implements NestInterceptor<T, IApiResponse<
           return {
             success: true,
             data: data.data,
-            pagination: data.pagination,
+            pagination: {
+              ...data.pagination,
+              total: data.pagination.totalDocs || data.pagination.total,
+              pages: data.pagination.totalPages || data.pagination.pages,
+            },
             timestamp: new Date().toISOString(),
           } as any;
         }

@@ -31,7 +31,6 @@ export const SaleForm: React.FC<SaleFormProps> = ({
     defaultValues: {
       customer: '',
       items: [{ product: '', quantity: 1 }],
-      paymentMethod: 'cash',
       notes: '',
     },
   });
@@ -49,7 +48,7 @@ export const SaleForm: React.FC<SaleFormProps> = ({
   const calculation = React.useMemo(() => {
     let total = 0;
     const computedItems = (watchedItems || []).map((item) => {
-      const prod = products.find((p) => p._id === item?.product);
+      const prod = products.find((p) => (p.id || p._id) === item?.product);
       const price = prod ? prod.unitPrice : 0;
       const qty = Number(item?.quantity) || 0;
       const subtotal = price * qty;
@@ -71,25 +70,12 @@ export const SaleForm: React.FC<SaleFormProps> = ({
           >
             <option value="">Select a customer...</option>
             {customers.map((cust) => (
-              <option key={cust._id} value={cust._id}>
+              <option key={cust.id || cust._id} value={cust.id || cust._id}>
                 {cust.name} ({cust.email})
               </option>
             ))}
           </select>
           {errors.customer && <p className="text-xs text-red-500 mt-1">{errors.customer.message}</p>}
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block">Payment Method</label>
-          <select
-            {...register('paymentMethod')}
-            className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-          >
-            <option value="cash">Cash</option>
-            <option value="card">Card</option>
-            <option value="bank_transfer">Bank Transfer</option>
-          </select>
-          {errors.paymentMethod && <p className="text-xs text-red-500 mt-1">{errors.paymentMethod.message}</p>}
         </div>
       </div>
 
@@ -118,7 +104,7 @@ export const SaleForm: React.FC<SaleFormProps> = ({
                 >
                   <option value="">Choose product...</option>
                   {products.map((prod) => (
-                    <option key={prod._id} value={prod._id} disabled={prod.stockQuantity <= 0}>
+                    <option key={prod.id || prod._id} value={prod.id || prod._id} disabled={prod.stockQuantity <= 0}>
                       {prod.name} (SKU: {prod.sku}) — In Stock: {prod.stockQuantity}
                     </option>
                   ))}

@@ -12,8 +12,8 @@ export const DashboardLayout: React.FC = () => {
       <Sidebar />
 
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 min-h-screen ${
-          sidebarCollapsed ? 'md:pl-20' : 'md:pl-64'
+        className={`flex-1 flex flex-col transition-all duration-300 ease-in-out min-h-screen ${
+          sidebarCollapsed ? 'md:pl-[72px]' : 'md:pl-64'
         }`}
       >
         <Header />

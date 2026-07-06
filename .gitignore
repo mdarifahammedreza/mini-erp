@@ -1,2 +1,4 @@
 plan/
 node_modules/
+.agent/
+dist/

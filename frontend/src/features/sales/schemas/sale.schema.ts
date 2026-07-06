@@ -8,7 +8,6 @@ export const saleItemSchema = z.object({
 export const saleSchema = z.object({
   customer: z.string().min(1, 'Customer is required'),
   items: z.array(saleItemSchema).min(1, 'At least one product item is required'),
-  paymentMethod: z.enum(['cash', 'card', 'bank_transfer']),
   notes: z.string().max(255).optional().or(z.literal('')),
 });
 

@@ -18,11 +18,8 @@ export class SalesService {
   ) {}
 
   async create(createDto: CreateSaleDto, userId: string): Promise<Sale> {
-    const session = await this.connection.startSession();
-    session.startTransaction();
-
     try {
-      const customer = await this.customerModel.findById(createDto.customer).session(session).exec();
+      const customer = await this.customerModel.findById(createDto.customer).exec();
       if (!customer || !customer.isActive) {
         throw new BadRequestException('Customer not found or inactive');
       }
@@ -31,7 +28,7 @@ export class SalesService {
       let grandTotal = 0;
 
       for (const item of createDto.items) {
-        const product = await this.productModel.findById(item.product).session(session).exec();
+        const product = await this.productModel.findById(item.product).exec();
         if (!product || !product.isActive) {
           throw new BadRequestException(`Product with ID ${item.product} not found or inactive`);
         }
@@ -57,7 +54,7 @@ export class SalesService {
         const updatedProduct = await this.productModel.findByIdAndUpdate(
           item.product,
           { $inc: { stockQuantity: -item.quantity } },
-          { new: true, session },
+          { returnDocument: 'after' },
         ).exec();
 
         if (updatedProduct && updatedProduct.stockQuantity < 5) {
@@ -70,7 +67,7 @@ export class SalesService {
         }
       }
 
-      const invoiceNumber = await this.generateInvoiceNumber(session);
+      const invoiceNumber = await this.generateInvoiceNumber();
       const saleDate = createDto.saleDate ? new Date(createDto.saleDate) : new Date();
 
       const newSaleDocs = await this.saleModel.create(
@@ -85,21 +82,15 @@ export class SalesService {
             saleDate,
           },
         ],
-        { session },
       );
       const newSale = newSaleDocs[0] as any;
-
-      await session.commitTransaction();
 
       const populatedSale = await this.findOne(newSale._id.toString());
       this.eventEmitter.emit('sale.created', populatedSale);
 
       return populatedSale;
     } catch (error) {
-      await session.abortTransaction();
       throw error;
-    } finally {
-      session.endSession();
     }
   }
 
@@ -158,7 +149,7 @@ export class SalesService {
     return sale;
   }
 
-  private async generateInvoiceNumber(session: any): Promise<string> {
+  private async generateInvoiceNumber(): Promise<string> {
     const today = new Date();
     const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '');
     
@@ -170,7 +161,7 @@ export class SalesService {
 
     const count = await this.saleModel.countDocuments({
       createdAt: { $gte: startOfDay, $lte: endOfDay },
-    }).session(session).exec();
+    }).exec();
 
     const sequentialStr = String(count + 1).padStart(4, '0');
     return `INV-${dateStr}-${sequentialStr}`;

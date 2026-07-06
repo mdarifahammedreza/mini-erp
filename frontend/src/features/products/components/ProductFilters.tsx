@@ -38,7 +38,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (
-            <option key={cat._id} value={cat._id}>
+            <option key={cat.id || cat._id} value={cat.id || cat._id}>
               {cat.name}
             </option>
           ))}

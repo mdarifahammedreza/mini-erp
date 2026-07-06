@@ -75,6 +75,18 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
           />
           {errors.address && <p className="text-xs text-red-500 mt-1">{errors.address.message}</p>}
         </div>
+
+        <div className="flex items-center space-x-3 pt-2">
+          <input
+            type="checkbox"
+            id="isActive"
+            {...register('isActive')}
+            className="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500"
+          />
+          <label htmlFor="isActive" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            Account is Active
+          </label>
+        </div>
       </div>
 
       <div className="flex justify-end space-x-3 pt-6 border-t border-slate-100 dark:border-slate-800">

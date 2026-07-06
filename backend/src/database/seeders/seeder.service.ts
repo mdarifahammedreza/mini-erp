@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Permission } from '../../modules/permissions/schemas/permission.schema';
@@ -9,8 +9,12 @@ import { Product } from '../../modules/products/schemas/product.schema';
 import { Customer } from '../../modules/customers/schemas/customer.schema';
 
 @Injectable()
-export class SeederService {
+export class SeederService implements OnModuleInit {
   private readonly logger = new Logger(SeederService.name);
+
+  async onModuleInit() {
+    await this.seed();
+  }
 
   constructor(
     @InjectModel(Permission.name) private readonly permissionModel: Model<Permission>,
@@ -230,11 +234,17 @@ export class SeederService {
     ];
 
     for (const u of usersToSeed) {
-      const exists = await this.userModel.findOne({ email: u.email });
-      if (!exists) {
-        const newUser = new this.userModel(u);
-        await newUser.save();
-        this.logger.log(`Created user: ${u.email}`);
+      try {
+        const exists = await this.userModel.findOne({ email: u.email });
+        if (!exists) {
+          const newUser = new this.userModel(u);
+          await newUser.save();
+          this.logger.log(`Created user: ${u.email}`);
+        }
+      } catch (error: any) {
+        if (error.code === 11000) {
+          this.logger.warn(`User ${u.email} already exists (soft-deleted). Skipping.`);
+        }
       }
     }
   }
@@ -248,12 +258,16 @@ export class SeederService {
 
     const categoryMap = new Map<string, Category>();
     for (const cat of categoriesData) {
-      let category = await this.categoryModel.findOne({ name: cat.name });
-      if (!category) {
-        category = await this.categoryModel.create(cat);
-        this.logger.log(`Created category: ${cat.name}`);
+      try {
+        let category = await this.categoryModel.findOne({ name: cat.name });
+        if (!category) {
+          category = await this.categoryModel.create(cat);
+          this.logger.log(`Created category: ${cat.name}`);
+        }
+        if (category) categoryMap.set(cat.name, category);
+      } catch (error: any) {
+        if (error.code === 11000) this.logger.warn(`Category ${cat.name} already exists (soft-deleted). Skipping.`);
       }
-      categoryMap.set(cat.name, category);
     }
 
     const productsData = [
@@ -300,10 +314,14 @@ export class SeederService {
     ];
 
     for (const prod of productsData) {
-      const exists = await this.productModel.findOne({ sku: prod.sku });
-      if (!exists) {
-        await this.productModel.create(prod);
-        this.logger.log(`Created product: ${prod.sku}`);
+      try {
+        const exists = await this.productModel.findOne({ sku: prod.sku });
+        if (!exists) {
+          await this.productModel.create(prod);
+          this.logger.log(`Created product: ${prod.sku}`);
+        }
+      } catch (error: any) {
+        if (error.code === 11000) this.logger.warn(`Product ${prod.sku} already exists (soft-deleted). Skipping.`);
       }
     }
 
@@ -314,10 +332,14 @@ export class SeederService {
     ];
 
     for (const cust of customersData) {
-      const exists = await this.customerModel.findOne({ email: cust.email });
-      if (!exists) {
-        await this.customerModel.create(cust);
-        this.logger.log(`Created customer: ${cust.name}`);
+      try {
+        const exists = await this.customerModel.findOne({ email: cust.email });
+        if (!exists) {
+          await this.customerModel.create(cust);
+          this.logger.log(`Created customer: ${cust.name}`);
+        }
+      } catch (error: any) {
+        if (error.code === 11000) this.logger.warn(`Customer ${cust.email} already exists (soft-deleted). Skipping.`);
       }
     }
   }

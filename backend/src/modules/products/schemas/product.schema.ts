@@ -57,7 +57,7 @@ ProductSchema.virtual('unitPrice').get(function () {
 
 ProductSchema.virtual('imageUrl').get(function () {
   if (!this.image) return '';
-  return this.image.startsWith('/') ? this.image : `/${this.image}`;
+  return this.image.startsWith('/api/v1/') ? this.image : `/api/v1/${this.image.replace(/^\//, '')}`;
 });
 
 // Indexes
