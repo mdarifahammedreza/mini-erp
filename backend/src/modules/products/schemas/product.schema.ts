@@ -31,16 +31,9 @@ export class Product extends Document {
 
   @Prop({ default: true })
   isActive: boolean;
-
-  @Prop({ virtual: true })
-  id: string;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
-
-ProductSchema.virtual('id').get(function () {
-  return this._id?.toString();
-});
 
 // Apply custom plugins
 ProductSchema.plugin(timestampPlugin);
@@ -68,7 +61,6 @@ ProductSchema.virtual('imageUrl').get(function () {
 });
 
 // Indexes
-ProductSchema.index({ sku: 1 });
 ProductSchema.index({ category: 1, isActive: 1, deletedAt: 1 });
 ProductSchema.index({ stockQuantity: 1, isActive: 1, deletedAt: 1 });
 ProductSchema.index({ sellingPrice: 1 });

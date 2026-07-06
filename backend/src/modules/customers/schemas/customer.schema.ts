@@ -1,6 +1,9 @@
+
+
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { timestampPlugin, softDeletePlugin, toJSONPlugin, paginatePlugin } from '../../../database/plugins';
+import { paginatePlugin, softDeletePlugin, timestampPlugin, toJSONPlugin } from '../../../database/plugins';
 
 @Schema({ collection: 'customers' })
 export class Customer extends Document {
@@ -29,6 +32,5 @@ CustomerSchema.plugin(paginatePlugin);
 CustomerSchema.plugin(toJSONPlugin);
 
 // Indexes
-CustomerSchema.index({ email: 1 }, { unique: true, sparse: true });
 CustomerSchema.index({ isActive: 1, deletedAt: 1 });
 CustomerSchema.index({ name: 'text', email: 'text', phone: 'text' });

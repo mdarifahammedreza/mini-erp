@@ -71,9 +71,9 @@ exports.Product = Product = __decorate([
     (0, mongoose_1.Schema)({ collection: 'products' })
 ], Product);
 exports.ProductSchema = mongoose_1.SchemaFactory.createForClass(Product);
-exports.ProductSchema.virtual('id').get(function () {
-    return this._id?.toString();
-});
+// exports.ProductSchema.virtual('id').get(function () {
+//     return this._id?.toString();
+// });
 exports.ProductSchema.plugin(plugins_1.timestampPlugin);
 exports.ProductSchema.plugin(plugins_1.softDeletePlugin);
 exports.ProductSchema.plugin(plugins_1.paginatePlugin);

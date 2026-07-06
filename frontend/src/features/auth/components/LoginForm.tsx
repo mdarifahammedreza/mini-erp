@@ -6,12 +6,13 @@ import { toast } from 'sonner';
 import { loginSchema, type LoginInput } from '../schemas/login.schema';
 import { authService } from '../services/auth.service';
 import { useAuthStore } from '../../../store/auth.store';
-import { Lock, Mail, Loader2 } from 'lucide-react';
+import { Lock, Mail, Loader2, Eye, EyeOff } from 'lucide-react';
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.setUser);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const {
     register,
@@ -54,39 +55,46 @@ export const LoginForm: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block">Email Address</label>
+          <label className="text-sm font-medium text-slate-200 block">Email Address</label>
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="email"
               placeholder="name@company.com"
               {...register('email')}
-              className={`w-full pl-10 pr-4 py-2.5 border rounded-lg bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 transition duration-200 ${
+              className={`w-full pl-10 pr-4 py-2.5 border rounded-lg bg-white/10 text-white placeholder:text-slate-400 backdrop-blur-sm focus:outline-none focus:ring-2 transition duration-200 ${
                 errors.email
-                  ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
-                  : 'border-slate-200 dark:border-slate-700 focus:ring-blue-500/20 focus:border-blue-500'
+                  ? 'border-red-500 focus:ring-red-500/20'
+                  : 'border-white/20 focus:ring-blue-500/40 focus:border-blue-400'
               }`}
             />
           </div>
-          {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>}
+          {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email.message}</p>}
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-300 block">Password</label>
+          <label className="text-sm font-medium text-slate-200 block">Password</label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="••••••••"
               {...register('password')}
-              className={`w-full pl-10 pr-4 py-2.5 border rounded-lg bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 transition duration-200 ${
+              className={`w-full pl-10 pr-10 py-2.5 border rounded-lg bg-white/10 text-white placeholder:text-slate-400 backdrop-blur-sm focus:outline-none focus:ring-2 transition duration-200 ${
                 errors.password
-                  ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
-                  : 'border-slate-200 dark:border-slate-700 focus:ring-blue-500/20 focus:border-blue-500'
+                  ? 'border-red-500 focus:ring-red-500/20'
+                  : 'border-white/20 focus:ring-blue-500/40 focus:border-blue-400'
               }`}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none"
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
           </div>
-          {errors.password && <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>}
+          {errors.password && <p className="text-xs text-red-400 mt-1">{errors.password.message}</p>}
         </div>
       </div>
 

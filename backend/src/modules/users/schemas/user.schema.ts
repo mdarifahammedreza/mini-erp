@@ -44,7 +44,6 @@ UserSchema.virtual('fullName').get(function () {
 });
 
 // Indexes
-UserSchema.index({ email: 1 });
 UserSchema.index({ role: 1, isActive: 1, deletedAt: 1 });
 
 // Pre-save hook to hash password

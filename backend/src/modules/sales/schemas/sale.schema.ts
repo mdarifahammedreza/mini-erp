@@ -43,7 +43,6 @@ SaleSchema.path('items').validate(function (value: any[]) {
 }, 'Sale must have at least one item');
 
 // Indexes
-SaleSchema.index({ invoiceNumber: 1 });
 SaleSchema.index({ customer: 1, saleDate: -1 });
 SaleSchema.index({ createdBy: 1, saleDate: -1 });
 SaleSchema.index({ saleDate: -1 });
